@@ -26,7 +26,8 @@ class _WordChainGameState extends State<WordChainGame> {
   int _highestScore = 0;
   Timer? _timer;
   String _warningMessage = '';
-  TextEditingController _controller = TextEditingController(); // Controller for the input field
+  TextEditingController _controller =
+      TextEditingController(); // Controller for the input field
 
   @override
   void initState() {
@@ -60,7 +61,8 @@ class _WordChainGameState extends State<WordChainGame> {
     String inputWord = _controller.text; // Get the text from the controller
     if (inputWord.isEmpty) return;
 
-    if (inputWord[0].toLowerCase() != _currentWord[_currentWord.length - 1].toLowerCase() ||
+    if (inputWord[0].toLowerCase() !=
+            _currentWord[_currentWord.length - 1].toLowerCase() ||
         _usedWords.contains(inputWord.toLowerCase())) {
       // Invalid word logic: Show warning, no extra time added
       setState(() {
@@ -73,7 +75,7 @@ class _WordChainGameState extends State<WordChainGame> {
         _usedWords.add(inputWord.toLowerCase());
         _currentWord = inputWord;
         _score++;
-        _timeLeft += 5;  // Add 5 seconds for a valid word
+        _timeLeft += 5; // Add 5 seconds for a valid word
         _controller.clear(); // Clear the input field after a valid word
       });
     }
@@ -89,6 +91,18 @@ class _WordChainGameState extends State<WordChainGame> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF3A1078),
+        title: Text(
+          'Word Chain',
+          style: TextStyle(
+              color: Color(0xffffffff),
+              fontWeight: FontWeight.w700,
+              fontFamily: "Poppins",
+              fontSize: 36),
+        ),
+        centerTitle: true,
+      ),
       backgroundColor: const Color(0xFF3A1078),
       body: Center(
         child: _timeLeft > 0 ? _buildGameScreen() : _buildGameOverScreen(),
@@ -102,22 +116,42 @@ class _WordChainGameState extends State<WordChainGame> {
       children: [
         // Display the image here
         Image.asset(
-          'assets/images/chain.png',  // This is the path to your image in the assets folder
+          'assets/images/chain.png', // This is the path to your image in the assets folder
           height: 150, // Set the height or width as per your requirement
         ),
         SizedBox(height: 20),
-        Text('Word Chain', style: TextStyle(color: Colors.yellow, fontSize: 36, fontWeight: FontWeight.bold, fontFamily: "Poppins", decoration:TextDecoration.underline, decorationColor:Color.fromARGB(255, 255, 235, 59))),
+        Text('Word Chain',
+            style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Poppins",
+                decoration: TextDecoration.underline,
+                decorationColor: Color.fromARGB(255, 255, 235, 59))),
         SizedBox(height: 20),
-        Text('Next word must start with letter "${_currentWord[_currentWord.length - 1].toUpperCase()}"', style: TextStyle(color: Colors.yellow, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: "Poppins")),
+        Text(
+            'Next word must start with letter "${_currentWord[_currentWord.length - 1].toUpperCase()}"',
+            style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Poppins")),
         SizedBox(height: 10),
-        Text(_currentWord.toUpperCase(), style: TextStyle(color: Colors.yellow, fontSize: 40, fontWeight: FontWeight.bold, fontFamily: "Poppins")),
+        Text(_currentWord.toUpperCase(),
+            style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Poppins")),
         SizedBox(height: 20),
-        Text('Time Left: $_timeLeft seconds', style: TextStyle(color: Colors.yellow, fontFamily: "Poppins")),
+        Text('Time Left: $_timeLeft seconds',
+            style: TextStyle(color: Colors.yellow, fontFamily: "Poppins")),
         SizedBox(height: 12),
         if (_warningMessage.isNotEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(_warningMessage, style: TextStyle(color: Colors.red, fontSize: 16)),
+            child: Text(_warningMessage,
+                style: TextStyle(color: Colors.red, fontSize: 16)),
           ),
         SizedBox(height: 10),
         Padding(
@@ -127,8 +161,10 @@ class _WordChainGameState extends State<WordChainGame> {
             onChanged: (value) {
               setState(() {
                 // Automatically updates the text in the controller
-                _controller.text = value.toUpperCase();  // Force uppercase input
-                _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length)); // Keep the cursor at the end
+                _controller.text = value.toUpperCase(); // Force uppercase input
+                _controller.selection = TextSelection.fromPosition(TextPosition(
+                    offset:
+                        _controller.text.length)); // Keep the cursor at the end
               });
             },
             inputFormatters: [
@@ -146,7 +182,8 @@ class _WordChainGameState extends State<WordChainGame> {
         ElevatedButton(
           onPressed: _checkWord,
           style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
-          child: Text('Submit', style: TextStyle(color: const Color(0xFF3A1078))),
+          child:
+              Text('Submit', style: TextStyle(color: const Color(0xFF3A1078))),
         ),
       ],
     );
@@ -156,10 +193,19 @@ class _WordChainGameState extends State<WordChainGame> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Game Over', style: TextStyle(color: Colors.yellow, fontSize: 30, fontWeight: FontWeight.bold, fontFamily: "Poppins")),
+        Text('Game Over',
+            style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Poppins")),
         SizedBox(height: 20),
-        Text('Your Score: $_score', style: TextStyle(color: Colors.yellow, fontSize: 20, fontFamily: "Poppins")),
-        Text('Highest Score: $_highestScore', style: TextStyle(color: Colors.yellow, fontSize: 20,fontFamily: "Poppins")),
+        Text('Your Score: $_score',
+            style: TextStyle(
+                color: Colors.yellow, fontSize: 20, fontFamily: "Poppins")),
+        Text('Highest Score: $_highestScore',
+            style: TextStyle(
+                color: Colors.yellow, fontSize: 20, fontFamily: "Poppins")),
         SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
@@ -169,11 +215,12 @@ class _WordChainGameState extends State<WordChainGame> {
               _currentWord = 'PENCIL';
               _warningMessage = '';
               _startTimer();
-              _controller.clear();  // Clear the input field on game restart
+              _controller.clear(); // Clear the input field on game restart
             });
           },
           style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
-          child: Text('Play Again', style: TextStyle(color: const Color(0xFF3A1078))),
+          child: Text('Play Again',
+              style: TextStyle(color: const Color(0xFF3A1078))),
         ),
       ],
     );
@@ -183,7 +230,8 @@ class _WordChainGameState extends State<WordChainGame> {
 // Custom InputFormatter to force uppercase input
 class UpperCaseTextInputFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     // Converts the input text to uppercase
     return newValue.copyWith(
       text: newValue.text.toUpperCase(),
@@ -191,4 +239,3 @@ class UpperCaseTextInputFormatter extends TextInputFormatter {
     );
   }
 }
-
